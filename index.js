@@ -45,7 +45,7 @@ async function handleCommand(command) {
        *   - Use implemented functions in LinkedList to add the Student, and display the updated LinkedList
        */
         console.log('Adding student...')
-        const [name, year, email,specialization] = args
+        const [name, year, email, specialization] = args
         // --------> WRITE YOUR CODE BELOW
         rl.question("Enter student <Name>, <Year>, <Email>, <Specialization> : ", args =>{
             studentManagementSystem.addStudent(args);

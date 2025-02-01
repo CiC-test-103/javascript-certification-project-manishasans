@@ -6,3 +6,5 @@ asas{"data":["mani,4,r,t"],"next":{"data":["Viru,1,w,h"],"next":null}}null{"data
 {"data":"Manisha,343,sfsef,sfsedf","next":{"data":"Viraf,3,sdfsd,sdfsdf","next":{"data":"Hufrish,45,sdfs,sdfs","next":{"data":"Kaustubh,34,dfsf,sdfsdf","next":null}}}}
 {"data":"Name: Mani, Year: 453, Email: dgdrfg, Specialization: dfgdg","next":{"data":"Name: viraf, Year: 3, Email: dfgdf, Specialization: dghdthg","next":{"data":"Name: Hufrish, Year: 353, Email: dgdgdf, Specialization: hmkhjmh","next":{"data":"Name: Kaustubh, Year: 4, Email: dfgdgd, Specialization: dfgdg","next":{"data":"Name: Parnika, Year: 565, Email: dgfdgd, Specialization: dghdr","next":null}}}}}
 {"data":"Name: Viraf, Year: 2, Email: efsefg, Specialization: sgsgsd","next":{"data":"Name: Kaustubh, Year: 43, Email: dfgdg, Specialization: dgdg","next":{"data":"Name: parnika, Year: 5, Email: dfgd, Specialization: hjkmh","next":{"data":"Name: hufrish, Year: 5, Email: sdfsf, Specialization: sfsfs","next":null}}}}
+{"data":"mani","next":{"data":"huf","next":null}}
+{"data":"mks","next":{"data":"hks","next":null}}
