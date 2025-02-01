@@ -1,5 +1,7 @@
 // Necessary Imports (you will need to use this)
-const { Student } = require('./Student')
+const { stringify } = require('querystring');
+const { Student } = require('./Student');
+const { cpuUsage } = require('process');
 
 /**
  * Node Class (GIVEN, you will need to use this)
@@ -37,6 +39,8 @@ class LinkedList {
    */
   constructor() {
     // TODO
+    this.head = null;
+    this.length = 0;
   }
 
   /**
@@ -49,6 +53,21 @@ class LinkedList {
    */
   addStudent(newStudent) {
     // TODO
+    let current, previous;
+    if(!this.head){
+      this.head = new Node(newStudent,this.head);
+    }
+    else{
+      const node = new Node(newStudent);
+      current = this.head;
+      while(current.next){
+        previous = current
+        current = current.next;
+      }
+      current.next = node;
+    }
+    this.length++;
+    console.log('Linked List',this.head,'Size',this.length);
   }
 
   /**
@@ -61,6 +80,38 @@ class LinkedList {
    */
   removeStudent(email) {
     // TODO
+    if (!this.head){
+      console.log("Empty Linked List !!!");
+      return;
+    }
+    if (!email){
+      console.log("Email Entered is Null !!! Please enter a valid email id. ");
+      return;
+    }
+    let current = this.head;
+    let previous;
+    if (current.data.includes(email)) {
+      console.log(`Removed Student ${current.data}`);
+      this.head = current.next;
+      this.length--;
+      console.log('New List is ',this.head);
+    }
+    else {
+      previous = current;
+      while (current){
+        if (current.data.includes(email)) {
+          console.log('Removed Student ',current.data);
+          previous.next = current.next;
+          this.length--;
+          console.log('New List is ',this.head);
+          return
+        }
+        previous = current;
+        current = current.next;
+        console.log(current);
+      }
+    return -1
+    }
   }
 
   /**
@@ -70,16 +121,32 @@ class LinkedList {
    */
   findStudent(email) {
     // TODO
+    if (!this.head){
+      console.log("Empty Linked List !!!");
+      return;
+    }
+    let current = this.head;
+    while (current){
+      if (current.data.includes(email)){
+        console.log('Student Name is  ',current.data);
+        return current.data;
+      }
+      current = current.next;
+    }
+    console.log("Student Not Found!!!");
     return -1
   }
+
 
   /**
    * REQUIRES:  None
    * EFFECTS:   Clears all students from the Linked List
    * RETURNS:   None
    */
-  #clearStudents() {
+  clearStudents() {
     // TODO
+    this.head = null;
+    this.length = 0;
   }
 
   /**
@@ -92,6 +159,17 @@ class LinkedList {
    */
   displayStudents() {
     // TODO
+    if (!this.head){
+      console.log("Empty Linked List !!!");
+      return;
+    }
+    let current=this.head;
+    let count = 1;
+    while (current){
+      console.log(count,current.data);
+      count++;
+      current = current.next;
+    }
     return "";
   }
 
@@ -100,9 +178,23 @@ class LinkedList {
    * EFFECTS:   None
    * RETURNS:   A sorted array of students by name
    */
-  #sortStudentsByName() {
+  sortStudentsByName() {
     // TODO
-    return [];
+    console.log('Hi Sorting.........');
+    const fs = require('fs');
+    console.log("Begin");
+    fs.readFile("data.json",'utf8',(err,data) =>{
+      if (err){
+        console.log("Error Reading file ...");
+        return;
+      }
+      ///console.log("File Data is ...:",data);
+      let current = JSON.parse(data);
+      const nameArray = current.map(item=>item.name);
+      const sorted=nameArray.sort();
+      console.log('Sorted by Name : ',sorted);
+      return sorted;
+    });
   }
 
   /**
@@ -114,7 +206,21 @@ class LinkedList {
    */
   filterBySpecialization(specialization) {
     // TODO
-    return [];
+    const fs = require('fs');
+    console.log("Begin");
+    fs.readFile("data.json",'utf8',(err,data) =>{
+      if (err){
+        console.log("Error Reading file ...");
+        return;
+      }
+      ///console.log("File Data is ...:",data);
+      let current = JSON.parse(data);
+      let filtered = current.filter(item=>item.specialization===specialization);
+      const nameArray = filtered.map(item=>item.name);
+      const sorted=nameArray.sort();
+      console.log('Filtered & Sorted by Specialization',sorted);
+      return sorted;
+    });
   }
 
   /**
@@ -124,9 +230,27 @@ class LinkedList {
    * CONSIDERATIONS:
    * - Use sortStudentsByName()
    */
-  filterByMinAge(minAge) {
+  filterByMinYear(minYear) {
     // TODO
-    return [];
+    const fs = require('fs');
+    console.log("Begin");
+    fs.readFile("data.json",'utf8',(err,data) =>{
+      if (err){
+        console.log("Error Reading file ...");
+        return;
+      }
+      ///console.log("File Data is ...:",data);
+      let current = JSON.parse(data);
+      const numbArray = current.map(item=>item.year);
+      console.log(numbArray);
+      const minNumb = Math.min(...numbArray);
+      console.log(minNumb);
+      let filtered = current.filter(item=>item.year === minNumb);
+      const nameArray = filtered.map(item=item.name);
+      const sorted=nameArray.sort();
+      console.log('Filtered & Sorted by Year',sorted);
+      return sorted;
+    });
   }
 
   /**
@@ -136,6 +260,21 @@ class LinkedList {
    */
   async saveToJson(fileName) {
     // TODO
+    console.log(fileName);
+    const fs = require('fs').promises;
+    console.log("Began");
+     //
+    try{
+      const data = await fs.readFile(fileName, 'utf8');
+      console.log("Student File is : ",data);
+      const newcontent = data +"\n"+ JSON.stringify(this.head);
+      await fs.writeFile(fileName,newcontent,'utf8');
+      console.log("Student Linked List updated successfully!!!");
+    }
+    catch(error){
+      console.log("Error");
+    }
+    console.log("Finished");
   }
 
   /**
@@ -147,6 +286,16 @@ class LinkedList {
    */
   async loadFromJSON(fileName) {
     // TODO
+    const fs = require('fs').promises;
+    console.log("Begin");
+    try{
+      const data = await fs.readFile(fileName, 'utf8');
+      console.log("File Content is : ",data);
+    }
+    catch(error){
+      console.log("Error");
+    }
+    console.log("Finish");
   }
 
 }

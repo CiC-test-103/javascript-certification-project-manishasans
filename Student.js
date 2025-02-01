@@ -75,6 +75,7 @@ class Student {
    * RETURNS:   None
    */
   setEmail(newEmail) {
+    console.log('Hi Student',newEmail);
     this.#email = newEmail;
   }
 
@@ -87,5 +88,12 @@ class Student {
     this.#specialization = newSpecialization;
   }
 }
+// class NewSstudent extends Student {
+//   constructor(name, year, email, specialization) {
+//     super(name, year, email, specialization);
+//     console.log(this.name,this.year,this.email);
+//   }
+// }
+
 
 module.exports = { Student }

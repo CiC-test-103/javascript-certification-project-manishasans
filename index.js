@@ -23,7 +23,7 @@ function main() {
       - remove [email]: Remove a student by email
       - display: Show all students
       - find [email]: Find a student by email
-      - save: Save the current linked list to the specified file
+      - save [fileName]: Save the current linked list to the specified file
       - load [fileName]: Load a linked list from a file
       - clear: Clear the current linked list
       - q: Quit the terminal
@@ -45,9 +45,17 @@ async function handleCommand(command) {
        *   - Use implemented functions in LinkedList to add the Student, and display the updated LinkedList
        */
         console.log('Adding student...')
-        const [name, year, email, specialization] = args
+        const [name, year, email,specialization] = args
         // --------> WRITE YOUR CODE BELOW
-
+        rl.question("Enter student <Name>, <Year>, <Email>, <Specialization> : ", args =>{
+            studentManagementSystem.addStudent(args);
+        });
+        // rl.question("Enter the Name : ", name =>{ rl.question("Enter the Year : ",year =>{ rl.question("Enter the Email : ",email =>{rl.question("Enter the Specialization : ",specialization=>{
+        //   const student = new Student(name,year,email,specialization);
+        //   studentManagementSystem.addStudent(student.getString());
+          //studentManagementSystem.addStudent(args);
+          //rl.close();
+        //})})})});
         // --------> WRITE YOUR CODE ABOVE
         break;
 
@@ -62,7 +70,10 @@ async function handleCommand(command) {
        */
       console.log('Removing student...')
       // --------> WRITE YOUR CODE BELOW
-      
+      rl.question("Enter the email id to remove from Linked List ", removeEmail => {
+        studentManagementSystem.removeStudent(removeEmail);
+       // rl.close();
+      }) 
       // --------> WRITE YOUR CODE ABOVE
       break;
 
@@ -75,7 +86,10 @@ async function handleCommand(command) {
        */
       console.log('Displaying students...')
       // --------> WRITE YOUR CODE BELOW
-
+      console.log('  ');
+      studentManagementSystem.displayStudents();
+      console.log('  ');
+      console.log('Displayed all');
       // --------> WRITE YOUR CODE ABOVE
       break;
 
@@ -91,7 +105,10 @@ async function handleCommand(command) {
        */
       console.log('Finding student...')
       // --------> WRITE YOUR CODE BELOW
-      
+      rl.question("Enter the email id to find from Linked List ", findEmail => {
+        studentManagementSystem.findStudent(findEmail);
+        //rl.close();
+      })
       // --------> WRITE YOUR CODE ABOVE
       break;
 
@@ -106,8 +123,12 @@ async function handleCommand(command) {
        */
       console.log('Saving data...')
       // --------> WRITE YOUR CODE BELOW
-
+      rl.question("Enter the file name to save your Linked List ",saveFileName => {
+        studentManagementSystem.saveToJson(saveFileName);
+        //rl.close();
+      })
       // --------> WRITE YOUR CODE ABOVE
+      break;
 
     case "load":
       /**
@@ -120,7 +141,10 @@ async function handleCommand(command) {
        */
       console.log('Loading data...')
       // --------> WRITE YOUR CODE BELOW
-
+      rl.question("Enter the file name to save your Linked List ",loadFileName => {
+        studentManagementSystem.loadFromJSON(loadFileName);
+        //rl.close();
+      })
       // --------> WRITE YOUR CODE ABOVE
       break;
 
@@ -134,10 +158,17 @@ async function handleCommand(command) {
        */
       console.log('Clearing data...')
       // --------> WRITE YOUR CODE BELOW
-
+      studentManagementSystem.clearStudents();
       // --------> WRITE YOUR CODE ABOVE
       break;
-
+    // case 'sort':
+    //     rl.question('Sort',sort => {
+    //       //studentManagementSystem.sortStudentsByName("Sort");
+    //       //studentManagementSystem.filterBySpecialization("Physics");
+    //       //studentManagementSystem.filterByMinYear("Filter");
+    //     rl.close();
+    //     })
+    //   break;
     case 'q':
         console.log('Exiting...');
         rl.close();
